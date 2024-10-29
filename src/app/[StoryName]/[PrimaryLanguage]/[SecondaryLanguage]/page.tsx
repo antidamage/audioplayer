@@ -153,7 +153,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const CoverURL = "/img/cover/Cover" + StoryName + ".png";
 
   useEffect(() => {
-    let intervalHandle: any;
+    let intervalHandle: NodeJS.Timeout;
 
     if (audioRef.current) {
       setMaxProgress(audioRef.current.duration);
