@@ -1,7 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import localFont from "next/font/local";
-import Image from "next/image";
 import { Flex, Button, Slider } from "@radix-ui/themes";
 import { PlayIcon, PauseIcon, ReloadIcon } from "@radix-ui/react-icons"
 
@@ -42,18 +41,18 @@ const LanguageMap: Language[] = [
   { key: "Maori", shortName: "Maori", display: "Te Reo Māori" },
 ];
 
-const ValidBooks = [
-  "Art",
-  "BikeRace",
-  "Band",
-  "Count",
-  "Dance",
-  "KakapoDisco",
-  "Opposites",
-  "Party",
-  "Play",
-  "TreasureHunt"
-];
+// const ValidBookNames = [
+//   "Art",
+//   "BikeRace",
+//   "Band",
+//   "Count",
+//   "Dance",
+//   "KakapoDisco",
+//   "Opposites",
+//   "Party",
+//   "Play",
+//   "TreasureHunt"
+// ];
 
 const BookNamesLocalised: BookNames = {
   "Art": [
