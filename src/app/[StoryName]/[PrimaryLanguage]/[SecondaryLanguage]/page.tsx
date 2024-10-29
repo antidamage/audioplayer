@@ -6,6 +6,8 @@ import { PlayIcon, PauseIcon, ReloadIcon } from "@radix-ui/react-icons"
 
 import "./../../../AudioPlayer.css";
 
+export const dynamicParams = false;
+
 const gotham = localFont({
   src: "../../../../../public/f/Gotham-Rounded-Bold.woff2",
   variable: "--font-gotham",
