@@ -199,7 +199,6 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
 
   const skip = (amount: number) => {
     // Skip the amount
-    console.log("skipping " + amount);
     if (audioRef.current) {
       audioRef.current.currentTime = audioRef.current.currentTime + amount;
     }

@@ -7,40 +7,15 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-
-  .background {
-    font-family: Arial, Helvetica, sans-serif;
-
-    margin: 0;
-    padding: 0;
-    background: url('/img/ui/bg-night.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-color: rgb(168, 255, 254);
-    color: #FFF;
-  }
-}
-
-.background {
-  font-family: Arial, Helvetica, sans-serif;
-
-  margin: 0;
-  padding: 0;
-  background: url('/img/ui/bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  color: #FFF;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(33, 33, 33);
+    --foreground: #ededed;
   }
 }

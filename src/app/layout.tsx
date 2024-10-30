@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Theme accentColor="teal" radius="small" className="background">
+        <Theme accentColor="teal" radius="small" className="m-0 p-0 bg-cover bg-no-repeat bg-top bg-[url('/img/ui/bg.jpg')] dark:bg-[url('/img/ui/bg-night.jpg')]">
           {children}
         </Theme>
       </body>
