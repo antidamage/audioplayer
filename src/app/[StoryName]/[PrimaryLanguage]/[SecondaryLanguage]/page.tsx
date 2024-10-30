@@ -225,7 +225,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
     <div className="w-screen">
       <div className="sm:w-11/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 h-screen content-center ml-auto mr-auto p-10">
 
-        <div className="w-10/12 aspect-square ml-auto mr-auto items-start bg-contain bg-no-repeat bg-center"
+        <div className="w-10/12 aspect-square ml-auto mr-auto items-start bg-contain bg-no-repeat bg-center shadow-2xl"
           style={{ backgroundImage: `url(${CoverURL})` }}>
 
           <div className="w-6/6 h-1/6 mb-4"></div>
@@ -245,20 +245,22 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
                 [text-shadow:_.05em_.05em_1px_rgb(0_0_0_/_80%)]`}>
             {PrimaryStoryName?.display} / {SecondaryStoryName?.display}</div>
         </div>
-        <div className={`${gotham.className} antialiased text-lg text-white content-center text-center items-center p-5`}>{PrimaryLanguages?.display} / {SecondaryLanguages?.display}</div>
+        <div className={`${gotham.className} antialiased text-lg text-slate-600 dark:text-white content-center text-center items-center p-5`}>{PrimaryLanguages?.display} / {SecondaryLanguages?.display}</div>
         <Flex direction="column" gap="0">
           <div className="flex justify-between">
-            <Button radius="full" className="flex-none w-12 h-12 scale-x-[-1] ml-10 mt-2" onClick={() => { skip(-10) }}>
-              <ReloadIcon className="flex-none w-8 h-8" />
+            <Button radius="full" className="flex-none w-14 h-14 ml-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(-10) }}>
+              <ReloadIcon className="flex-none w-11 h-11 scale-x-[-1] text-teal-200" />
+              <div className="absolute text-center font-bold text-xs text-teal-200">10</div>
             </Button>
 
-            <Button radius="full" className="flex-none w-16 h-16" onClick={playToggle}>
+            <Button radius="full" className="flex-none w-16 h-16 border-solid border-2 border-teal-400" onClick={playToggle}>
               {playing && <PauseIcon className="flex-none w-8 h-8" />}
               {!playing && <PlayIcon className="flex-none w-8 h-8" />}
             </Button>
 
-            <Button radius="full" className="flex-none w-12 h-12 mr-10 mt-2" onClick={() => { skip(10) }}>
-              <ReloadIcon className="flex-none w-8 h-8" />
+            <Button radius="full" className="flex-none w-14 h-14 mr-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(10) }}>
+              <ReloadIcon className="flex-none w-11 h-11 text-teal-200" />
+              <div className="absolute text-center mr-1 font-bold text-xs text-teal-200">10</div>
             </Button>
           </div>
 

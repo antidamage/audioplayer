@@ -22,6 +22,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-color: rgb(168, 255, 254);
     color: #FFF;
   }
 }
@@ -31,11 +32,11 @@
 
   margin: 0;
   padding: 0;
-  background: url('/img/ui/bg-night.jpg');
+  background: url('/img/ui/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  color: #222;
+  color: #FFF;
 }
 
 @layer utilities {
