@@ -166,7 +166,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
       console.log("Starting timeline update");
     }
     return () => clearInterval(intervalHandle)
-  }, [playing, seeking, progress]);
+  }, [playing, seeking]);
 
   const updateTimeline = () => {
     if (audioRef.current && playing && !seeking) {
