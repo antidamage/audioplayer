@@ -159,11 +159,9 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
 
     if (audioRef.current) {
       setMaxProgress(audioRef.current.duration);
-      console.log("Max progress: " + audioRef.current.duration);
     }
     if (playing) {
       intervalHandle = setInterval(updateTimeline, 100);
-      console.log("Starting timeline update");
     }
     return () => clearInterval(intervalHandle)
   }, [playing, seeking]);
@@ -207,22 +205,39 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const seek = (value: number[]) => {
     setSeeking(true);
     setProgress(value);
-    console.log("value changed: " + value);
   }
 
   const seekDone = (value: number[]) => {
-    console.log("value committed: " + value[0]);
     setSeeking(false);
     if (audioRef.current) {
       audioRef.current.currentTime = value[0];
       setProgress(value);
-      console.log("currenTime: " + value);
     }
   }
 
   return (<>
     <div className="w-screen">
       <div className="sm:w-11/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 h-screen content-center ml-auto mr-auto p-10">
+
+        {/* <div className="text-black font-bold text-lg">
+          <span className="invisible 7xs:visible mr-3">7xs</span>
+          <span className="invisible 6xs:visible mr-3">6xs</span>
+          <span className="invisible 5xs:visible mr-3">5xs</span>
+          <span className="invisible 4xs:visible mr-3">4xs</span>
+          <span className="invisible 3xs:visible mr-3">3xs</span>
+          <span className="invisible 2xs:visible mr-3">2xs</span>
+          <span className="invisible xs:visible mr-3">xs</span>
+          <span className="invisible sm:visible mr-3">sm</span>
+          <span className="invisible md:visible mr-3">md</span>
+          <span className="invisible lg:visible mr-3">lg</span>
+          <span className="invisible xl:visible mr-3">xl</span>
+          <span className="invisible 2xl:visible mr-3">2xl</span>
+          <span className="invisible 3xl:visible mr-3">3xl</span>
+          <span className="invisible 4xl:visible mr-3">4xl</span>
+          <span className="invisible 5xl:visible mr-3">5xl</span>
+          <span className="invisible 6xl:visible mr-3">6xl</span>
+          <span className="invisible 7xl:visible mr-3">7xl</span>
+        </div> */}
 
         <div className="w-10/12 aspect-square ml-auto mr-auto items-start bg-contain bg-no-repeat bg-center shadow-2xl"
           style={{ backgroundImage: `url(${CoverURL})` }}>
@@ -231,8 +246,30 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
 
           <div className={`${gotham.className}
                 antialiased
-                object-scale-down 
-                text-4xl
+
+                
+                text-3xl
+                
+                7xl:text-8xl
+                6xl:text-7xl
+                5xl:text-6xl
+                4xl:text-5xl
+                3xl:text-4xl
+                2xl:text-3xl
+                xl:text-3xl
+                lg:text-3xl
+                md:text-3xl
+                sm:text-4xl
+                xs:text-3xl
+                2xs:text-3xl
+                3xs:text-3xl
+                4xs:text-lg
+                5xs:text-lg
+                6xs:text-lg
+                7xs:text-lg
+
+                [line-height:_1.0]
+
                 font-bold
                 text-white
                 text-center
