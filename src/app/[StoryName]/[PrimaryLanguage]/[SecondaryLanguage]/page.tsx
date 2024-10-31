@@ -249,7 +249,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
 
                 
                 text-3xl
-                
+
                 7xl:text-8xl
                 6xl:text-7xl
                 5xl:text-6xl
@@ -262,11 +262,11 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
                 sm:text-4xl
                 xs:text-3xl
                 2xs:text-3xl
-                3xs:text-3xl
-                4xs:text-lg
-                5xs:text-lg
-                6xs:text-lg
-                7xs:text-lg
+                3xs:text-lg
+                4xs:text-base
+                5xs:text-base
+                6xs:text-base
+                7xs:text-base
 
                 [line-height:_1.0]
 
