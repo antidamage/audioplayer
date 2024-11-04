@@ -26,6 +26,10 @@ const config: Config = {
         '6xs': '350px',
         '7xs': '300px',
       },
+      fontSize: {
+        'coverlandscape': '4vh',
+        'coverportrait': '5vw',
+      }
     },
   },
   plugins: [],

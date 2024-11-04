@@ -250,23 +250,28 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
                 
                 text-3xl
 
-                7xl:text-8xl
-                6xl:text-7xl
-                5xl:text-6xl
-                4xl:text-5xl
-                3xl:text-4xl
-                2xl:text-3xl
-                xl:text-3xl
-                lg:text-3xl
-                md:text-3xl
-                sm:text-4xl
-                xs:text-3xl
-                2xs:text-3xl
-                3xs:text-lg
-                4xs:text-sm
-                5xs:text-sm
-                6xs:text-sm
-                7xs:text-sm
+                landscape:text-coverlandscape
+                portrait:text-coverportrait
+
+                //.title
+
+                // 7xl:text-8xl
+                // 6xl:text-7xl
+                // 5xl:text-6xl
+                // 4xl:text-5xl
+                // 3xl:text-4xl
+                // 2xl:text-3xl
+                // xl:text-3xl
+                // lg:text-3xl
+                // md:text-3xl
+                // sm:text-4xl
+                // xs:text-3xl
+                // 2xs:text-3xl
+                // 3xs:text-lg
+                // 4xs:text-sm
+                // 5xs:text-sm
+                // 6xs:text-sm
+                // 7xs:text-sm
 
                 [line-height:_1.0]
 
