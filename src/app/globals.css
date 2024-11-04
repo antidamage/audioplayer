@@ -13,6 +13,16 @@
   }
 }
 
+.title {
+  font-size: 7vw;
+  overflow: hidden;
+  padding: 5vw;
+  padding-top: 15vw;
+  text-shadow: 2px 2px 0px #000;
+  color: #FFF !important;
+  vertical-align: middle;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: rgb(33, 33, 33);
