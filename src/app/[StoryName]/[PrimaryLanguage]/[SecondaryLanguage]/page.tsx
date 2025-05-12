@@ -138,88 +138,107 @@ const BookNamesLocalised: BookNames = {
   ]
 };
 
-export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
-  const { StoryName, PrimaryLanguage, SecondaryLanguage }: AudioPlayerProps = params;
-  const audioRef = useRef<HTMLAudioElement>(null);
+export async function generateStaticParams() {
+  const params = [];
 
-  const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState([0]);
-  const [maxProgress, setMaxProgress] = useState(0);
-  const [seeking, setSeeking] = useState(false);
+  for (const storyName in BookNamesLocalised) {
+    const langs = BookNamesLocalised[storyName].map(entry => entry.language);
 
-  const PrimaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === PrimaryLanguage);
-  const SecondaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === SecondaryLanguage);
-  const PrimaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === PrimaryLanguages?.shortName);
-  const SecondaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === SecondaryLanguages?.shortName);
-
-  const CoverURL = "/img/cover/Cover" + StoryName + ".png";
-
-  useEffect(() => {
-    let intervalHandle: NodeJS.Timeout;
-
-    if (audioRef.current) {
-      setMaxProgress(audioRef.current.duration);
-    }
-    if (playing) {
-      intervalHandle = setInterval(updateTimeline, 100);
-    }
-    return () => clearInterval(intervalHandle)
-  }, [playing, seeking]);
-
-  const updateTimeline = () => {
-    if (audioRef.current && playing && !seeking) {
-      setProgress([audioRef.current.currentTime]);
+    for (const primary of langs) {
+      for (const secondary of langs) {
+        if (primary !== secondary) {
+          params.push({
+            StoryName: storyName,
+            PrimaryLanguage: primary,
+            SecondaryLanguage: secondary,
+          });
+        }
+      }
     }
   }
 
-  const playToggle = () => {
-    if (!playing && audioRef.current) {
-      playStart();
-    } else if (playing && audioRef.current) {
-      playStop();
+  export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
+    const { StoryName, PrimaryLanguage, SecondaryLanguage }: AudioPlayerProps = params;
+    const audioRef = useRef<HTMLAudioElement>(null);
+
+    const [playing, setPlaying] = useState(false);
+    const [progress, setProgress] = useState([0]);
+    const [maxProgress, setMaxProgress] = useState(0);
+    const [seeking, setSeeking] = useState(false);
+
+    const PrimaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === PrimaryLanguage);
+    const SecondaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === SecondaryLanguage);
+    const PrimaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === PrimaryLanguages?.shortName);
+    const SecondaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === SecondaryLanguages?.shortName);
+
+    const CoverURL = "/img/cover/Cover" + StoryName + ".png";
+
+    useEffect(() => {
+      let intervalHandle: NodeJS.Timeout;
+
+      if (audioRef.current) {
+        setMaxProgress(audioRef.current.duration);
+      }
+      if (playing) {
+        intervalHandle = setInterval(updateTimeline, 100);
+      }
+      return () => clearInterval(intervalHandle)
+    }, [playing, seeking]);
+
+    const updateTimeline = () => {
+      if (audioRef.current && playing && !seeking) {
+        setProgress([audioRef.current.currentTime]);
+      }
     }
-  }
 
-  const playStart = () => {
-    setPlaying(true);
-    if (audioRef.current) {
-      audioRef.current.currentTime = progress[0];
-      audioRef.current.play();
+    const playToggle = () => {
+      if (!playing && audioRef.current) {
+        playStart();
+      } else if (playing && audioRef.current) {
+        playStop();
+      }
     }
-  }
 
-  const playStop = () => {
-    setPlaying(false);
-    if (audioRef.current) {
-      audioRef.current.pause();
+    const playStart = () => {
+      setPlaying(true);
+      if (audioRef.current) {
+        audioRef.current.currentTime = progress[0];
+        audioRef.current.play();
+      }
     }
-  }
 
-  const skip = (amount: number) => {
-    // Skip the amount
-    if (audioRef.current) {
-      audioRef.current.currentTime = audioRef.current.currentTime + amount;
+    const playStop = () => {
+      setPlaying(false);
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
     }
-  }
 
-  const seek = (value: number[]) => {
-    setSeeking(true);
-    setProgress(value);
-  }
+    const skip = (amount: number) => {
+      // Skip the amount
+      if (audioRef.current) {
+        audioRef.current.currentTime = audioRef.current.currentTime + amount;
+      }
+    }
 
-  const seekDone = (value: number[]) => {
-    setSeeking(false);
-    if (audioRef.current) {
-      audioRef.current.currentTime = value[0];
+    const seek = (value: number[]) => {
+      setSeeking(true);
       setProgress(value);
     }
-  }
 
-  return (<>
-    <div className="w-screen">
-      <div className="sm:w-11/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 h-screen content-center ml-auto mr-auto p-10">
+    const seekDone = (value: number[]) => {
+      setSeeking(false);
+      if (audioRef.current) {
+        audioRef.current.currentTime = value[0];
+        setProgress(value);
+      }
+    }
 
-        {/* <div className="text-black font-bold text-lg">
+    return (<>
+      <div className="w-screen">
+        <div className="sm:w-11/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 h-screen content-center ml-auto mr-auto p-10">
+
+          {/* <div className="text-black font-bold text-lg">
           <span className="invisible 7xs:visible mr-3">7xs</span>
           <span className="invisible 6xs:visible mr-3">6xs</span>
           <span className="invisible 5xs:visible mr-3">5xs</span>
@@ -239,12 +258,12 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
           <span className="invisible 7xl:visible mr-3">7xl</span>
         </div> */}
 
-        <div className="w-10/12 aspect-square ml-auto mr-auto items-start bg-contain bg-no-repeat bg-center shadow-2xl"
-          style={{ backgroundImage: `url(${CoverURL})` }}>
+          <div className="w-10/12 aspect-square ml-auto mr-auto items-start bg-contain bg-no-repeat bg-center shadow-2xl"
+            style={{ backgroundImage: `url(${CoverURL})` }}>
 
-          <div className="w-6/6 h-1/6 mb-4"></div>
+            <div className="w-6/6 h-1/6 mb-4"></div>
 
-          <div className={`${gotham.className}
+            <div className={`${gotham.className}
                 antialiased
 
                 
@@ -284,45 +303,45 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
                 mr-10
                 h-1/6
                 [text-shadow:_.05em_.05em_1px_rgb(0_0_0_/_80%)]`}>
-            {PrimaryStoryName?.display} / {SecondaryStoryName?.display}</div>
-        </div>
-        <div className={`${gotham.className} antialiased text-lg text-slate-600 dark:text-white content-center text-center items-center p-5`}>{PrimaryLanguages?.display} / {SecondaryLanguages?.display}</div>
-        <Flex direction="column" gap="0">
-          <div className="flex justify-between">
-            <Button radius="full" className="flex-none w-14 h-14 ml-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(-10) }}>
-              <ReloadIcon className="flex-none w-11 h-11 scale-x-[-1] text-teal-200" />
-              <div className="absolute text-center font-bold text-xs text-teal-200">10</div>
-            </Button>
-
-            <Button radius="full" className="flex-none w-16 h-16 border-solid border-2 border-teal-400" onClick={playToggle}>
-              {playing && <PauseIcon className="flex-none w-8 h-8" />}
-              {!playing && <PlayIcon className="flex-none w-8 h-8" />}
-            </Button>
-
-            <Button radius="full" className="flex-none w-14 h-14 mr-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(10) }}>
-              <ReloadIcon className="flex-none w-11 h-11 text-teal-200" />
-              <div className="absolute text-center mr-1 font-bold text-xs text-teal-200">10</div>
-            </Button>
+              {PrimaryStoryName?.display} / {SecondaryStoryName?.display}</div>
           </div>
+          <div className={`${gotham.className} antialiased text-lg text-slate-600 dark:text-white content-center text-center items-center p-5`}>{PrimaryLanguages?.display} / {SecondaryLanguages?.display}</div>
+          <Flex direction="column" gap="0">
+            <div className="flex justify-between">
+              <Button radius="full" className="flex-none w-14 h-14 ml-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(-10) }}>
+                <ReloadIcon className="flex-none w-11 h-11 scale-x-[-1] text-teal-200" />
+                <div className="absolute text-center font-bold text-xs text-teal-200">10</div>
+              </Button>
 
-          <Slider
-            value={progress}
-            defaultValue={progress}
-            max={maxProgress} step={1}
+              <Button radius="full" className="flex-none w-16 h-16 border-solid border-2 border-teal-400" onClick={playToggle}>
+                {playing && <PauseIcon className="flex-none w-8 h-8" />}
+                {!playing && <PlayIcon className="flex-none w-8 h-8" />}
+              </Button>
 
-            onValueChange={seek}
-            onValueCommit={seekDone}
+              <Button radius="full" className="flex-none w-14 h-14 mr-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(10) }}>
+                <ReloadIcon className="flex-none w-11 h-11 text-teal-200" />
+                <div className="absolute text-center mr-1 font-bold text-xs text-teal-200">10</div>
+              </Button>
+            </div>
 
-            className="scale-[130%] mt-10 flex basis-full grow ml-10 mr-10"
-            size="3" color="teal" variant="soft" radius="full"
-          />
+            <Slider
+              value={progress}
+              defaultValue={progress}
+              max={maxProgress} step={1}
 
-          <audio className="hidden" ref={audioRef} src={`https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguages?.shortName}_${SecondaryLanguages?.shortName}.mp3`}>
-            Sorry, your browser does not support audio playback.
-          </audio >
+              onValueChange={seek}
+              onValueCommit={seekDone}
 
-        </Flex >
+              className="scale-[130%] mt-10 flex basis-full grow ml-10 mr-10"
+              size="3" color="teal" variant="soft" radius="full"
+            />
+
+            <audio className="hidden" ref={audioRef} src={`https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguages?.shortName}_${SecondaryLanguages?.shortName}.mp3`}>
+              Sorry, your browser does not support audio playback.
+            </audio >
+
+          </Flex >
+        </div >
       </div >
-    </div >
-  </>);
-}
+    </>);
+  }
