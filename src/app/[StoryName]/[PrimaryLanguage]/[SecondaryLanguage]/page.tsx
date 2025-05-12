@@ -82,9 +82,9 @@ const BookNamesLocalised: BookNames = {
   ],
 
   "Count": [
-    { language: "EnglishNZ", display: "Counting" },
-    { language: "Maori", display: "Reihi paihikara" },
-    { language: "Mandarin", display: "自行车比赛" },
+    { language: "EnglishNZ", display: "Count" },
+    { language: "Maori", display: "Kaute" },
+    { language: "Mandarin", display: "数数" },
     { language: "French", display: "Compter" },
     { language: "SpanishUS", display: "Contar" },
   ],
