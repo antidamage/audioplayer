@@ -36,10 +36,6 @@ interface BookNames {
   [key: string]: BookName[]
 }
 
-interface RedirectMap {
-  [key: string]: string[]
-}
-
 type StaticParam = {
   primary: string;
   secondary: string;
