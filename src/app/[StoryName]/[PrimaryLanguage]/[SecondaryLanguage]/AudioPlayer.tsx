@@ -23,7 +23,8 @@ interface AudioPlayerProps {
 interface Language {
   key: string,
   shortName: string,
-  display: string
+  display: string,
+  staticParams: string[]
 }
 
 interface BookName {
@@ -35,26 +36,23 @@ interface BookNames {
   [key: string]: BookName[]
 }
 
-const LanguageMap: Language[] = [
-  { key: "English-NZ", shortName: "EnglishNZ", display: "English NZ" },
-  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin" },
-  { key: "French", shortName: "French", display: "French" },
-  { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)" },
-  { key: "Maori", shortName: "Maori", display: "Te Reo Māori" },
-];
+interface RedirectMap {
+  [key: string]: string[]
+}
 
-// const ValidBookNames = [
-//   "Art",
-//   "BikeRace",
-//   "Band",
-//   "Count",
-//   "Dance",
-//   "KakapoDisco",
-//   "Opposites",
-//   "Party",
-//   "Play",
-//   "TreasureHunt"
-// ];
+type StaticParam = {
+  primary: string;
+  secondary: string;
+  storyName: string;
+};
+
+const LanguageMap: Language[] = [
+  { key: "English-NZ", shortName: "EnglishNZ", display: "English NZ", staticParams: ["English-NZ", "EnglishNZ", "English_NZ"] },
+  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin", "Simplified-Chinese", "SimplifiedChinese", "Simplified_Chinese"] },
+  { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
+  { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US", "SpanishUS", "Spanish_US"] },
+  { key: "Maori", shortName: "Maori", display: "Te Reo Māori", staticParams: ["Maori", "Te Reo Maori", "Te-Reo-Maori", "TeReoMaori", "Te_Reo_Maori"] },
+];
 
 const BookNamesLocalised: BookNames = {
   "Art": [
@@ -138,24 +136,34 @@ const BookNamesLocalised: BookNames = {
   ]
 };
 
-export async function generateStaticParams() {
-  const params = [];
+function getAliasesForKey(key: string): string[] {
+  return LanguageMap.find(lang => lang.key === key)?.staticParams ?? [];
+}
 
+export async function generateStaticParams(): Promise<StaticParam[]> {
+  const params: StaticParam[] = [];
   for (const storyName in BookNamesLocalised) {
     const langs = BookNamesLocalised[storyName].map(entry => entry.language);
-
-    for (const primary of langs) {
-      for (const secondary of langs) {
-        if (primary !== secondary) {
-          params.push({
-            StoryName: storyName,
-            PrimaryLanguage: primary,
-            SecondaryLanguage: secondary,
-          });
+    for (const primaryKey of langs) {
+      for (const secondaryKey of langs) {
+        if (primaryKey !== secondaryKey) {
+          const primaryAliases = getAliasesForKey(primaryKey);
+          const secondaryAliases = getAliasesForKey(secondaryKey);
+          if (!primaryAliases.length || !secondaryAliases.length) continue;
+          for (const primary of primaryAliases) {
+            for (const secondary of secondaryAliases) {
+              params.push({
+                primary,
+                secondary,
+                storyName,
+              });
+            }
+          }
         }
       }
     }
   }
+  return params;
 }
 
 export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
