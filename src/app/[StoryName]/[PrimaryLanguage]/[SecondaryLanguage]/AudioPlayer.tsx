@@ -179,10 +179,10 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const [maxProgress, setMaxProgress] = useState(0);
   const [seeking, setSeeking] = useState(false);
 
-  const PrimaryLanguageString = ResolveLanguageKey(PrimaryLanguage);
-  const SecondaryLanguageString = ResolveLanguageKey(SecondaryLanguage);
-  const PrimaryLanguageStructure = getLanguageByKey(PrimaryLanguage);
-  const SecondaryLanguageStructure = getLanguageByKey(SecondaryLanguage);
+  const PrimaryLanguageString = ResolveLanguageKey(PrimaryLanguage) ?? "";
+  const SecondaryLanguageString = ResolveLanguageKey(SecondaryLanguage) ?? "";
+  const PrimaryLanguageStructure = getLanguageByKey(PrimaryLanguageString);
+  const SecondaryLanguageStructure = getLanguageByKey(SecondaryLanguageString);
 
   //const PrimaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === PrimaryLanguage);
   //const SecondaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === SecondaryLanguage);
