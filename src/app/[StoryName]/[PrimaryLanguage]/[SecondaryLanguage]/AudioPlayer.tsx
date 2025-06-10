@@ -136,6 +136,10 @@ function getAliasesForKey(key: string): string[] {
   return LanguageMap.find(lang => lang.key === key)?.staticParams ?? [];
 }
 
+function getLanguageByKey(key: string): Language | undefined {
+  return LanguageMap.find(lang => lang.key === key);
+}
+
 export async function generateStaticParams(): Promise<StaticParam[]> {
   const params: StaticParam[] = [];
   for (const storyName in BookNamesLocalised) {
@@ -162,6 +166,10 @@ export async function generateStaticParams(): Promise<StaticParam[]> {
   return params;
 }
 
+function ResolveLanguageKey(input: string): string | undefined {
+  return LanguageMap.find(lang => lang.staticParams.includes(input))?.key;
+}
+
 export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const { StoryName, PrimaryLanguage, SecondaryLanguage }: AudioPlayerProps = params;
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -171,10 +179,15 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const [maxProgress, setMaxProgress] = useState(0);
   const [seeking, setSeeking] = useState(false);
 
-  const PrimaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === PrimaryLanguage);
-  const SecondaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === SecondaryLanguage);
-  const PrimaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === PrimaryLanguages?.shortName);
-  const SecondaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === SecondaryLanguages?.shortName);
+  const PrimaryLanguageString = ResolveLanguageKey(PrimaryLanguage);
+  const SecondaryLanguageString = ResolveLanguageKey(SecondaryLanguage);
+  const PrimaryLanguageStructure = getLanguageByKey(PrimaryLanguage);
+  const SecondaryLanguageStructure = getLanguageByKey(SecondaryLanguage);
+
+  //const PrimaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === PrimaryLanguage);
+  //const SecondaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === SecondaryLanguage);
+  const PrimaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === PrimaryLanguageStructure?.shortName);
+  const SecondaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === SecondaryLanguageStructure?.shortName);
 
   const CoverURL = "/img/cover/Cover" + StoryName + ".png";
 
@@ -310,7 +323,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
                 [text-shadow:_.05em_.05em_1px_rgb(0_0_0_/_80%)]`}>
             {PrimaryStoryName?.display} / {SecondaryStoryName?.display}</div>
         </div>
-        <div className={`${gotham.className} antialiased text-lg text-slate-600 dark:text-white content-center text-center items-center p-5`}>{PrimaryLanguages?.display} / {SecondaryLanguages?.display}</div>
+        <div className={`${gotham.className} antialiased text-lg text-slate-600 dark:text-white content-center text-center items-center p-5`}>{PrimaryLanguageStructure?.display} / {SecondaryLanguageStructure?.display}</div>
         <Flex direction="column" gap="0">
           <div className="flex justify-between">
             <Button radius="full" className="flex-none w-14 h-14 ml-10 mt-2 border-solid border-2 border-teal-400" onClick={() => { skip(-10) }}>
@@ -341,7 +354,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
             size="3" color="teal" variant="soft" radius="full"
           />
 
-          <audio className="hidden" ref={audioRef} src={`https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguages?.shortName}_${SecondaryLanguages?.shortName}.mp3`}>
+          <audio className="hidden" ref={audioRef} src={`https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguageStructure?.shortName}_${SecondaryLanguageStructure?.shortName}.mp3`}>
             Sorry, your browser does not support audio playback.
           </audio >
 
