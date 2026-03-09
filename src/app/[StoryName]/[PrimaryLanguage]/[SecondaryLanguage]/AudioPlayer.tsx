@@ -48,6 +48,7 @@ const LanguageMap: Language[] = [
   { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
   { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US", "SpanishUS", "Spanish_US"] },
   { key: "Maori", shortName: "Maori", display: "Te Reo Māori", staticParams: ["Maori", "Te Reo Maori", "Te-Reo-Maori", "TeReoMaori", "Te_Reo_Maori"] },
+  { key: "Italian", shortName: "Italian", display: "Italian", staticParams: ["Italian"] },
 ];
 
 const BookNamesLocalised: BookNames = {
@@ -73,6 +74,7 @@ const BookNamesLocalised: BookNames = {
     { language: "Mandarin", display: "自行车比赛" },
     { language: "French", display: "La course de vélo" },
     { language: "SpanishUS", display: "Carrera de bicicletas" },
+    { language: "Italian", display: "Gara in bicicletta" },
   ],
 
   "Count": [
@@ -113,6 +115,7 @@ const BookNamesLocalised: BookNames = {
     { language: "Mandarin", display: "宴会" },
     { language: "French", display: "La fête" },
     { language: "SpanishUS", display: "Fiesta" },
+    { language: "Italian", display: "Festa" },
   ],
 
   "Play": [
@@ -183,13 +186,10 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const SecondaryLanguageString = ResolveLanguageKey(SecondaryLanguage) ?? "";
   const PrimaryLanguageStructure = getLanguageByKey(PrimaryLanguageString);
   const SecondaryLanguageStructure = getLanguageByKey(SecondaryLanguageString);
-
-  //const PrimaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === PrimaryLanguage);
-  //const SecondaryLanguages: Language | undefined = LanguageMap.find(lang => lang.key === SecondaryLanguage);
   const PrimaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === PrimaryLanguageStructure?.shortName);
   const SecondaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === SecondaryLanguageStructure?.shortName);
-
   const CoverURL = "/img/cover/Cover" + StoryName + ".png";
+  const AudioURL = `https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguageStructure?.shortName}_${SecondaryLanguageStructure?.shortName}.mp3`;
 
   useEffect(() => {
     let intervalHandle: NodeJS.Timeout;
@@ -354,7 +354,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
             size="3" color="teal" variant="soft" radius="full"
           />
 
-          <audio className="hidden" ref={audioRef} src={`https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguageStructure?.shortName}_${SecondaryLanguageStructure?.shortName}.mp3`}>
+          <audio className="hidden" ref={audioRef} src={AudioURL}>
             Sorry, your browser does not support audio playback.
           </audio >
 
