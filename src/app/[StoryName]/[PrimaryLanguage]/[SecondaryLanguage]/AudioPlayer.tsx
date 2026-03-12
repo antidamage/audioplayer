@@ -5,8 +5,11 @@ import { Flex, Button, Slider } from "@radix-ui/themes";
 import { PlayIcon, PauseIcon, ReloadIcon } from "@radix-ui/react-icons"
 
 import "./../../../AudioPlayer.css";
-
-export const dynamicParams = false;
+import {
+  type AudioPlayerRouteParams,
+  getLanguageByKey,
+  getStoryName,
+} from "./audioPlayerData";
 
 const gotham = localFont({
   src: "../../../../../public/f/Gotham-Rounded-Bold.woff2",
@@ -14,167 +17,8 @@ const gotham = localFont({
   weight: "800",
 });
 
-interface AudioPlayerProps {
-  StoryName: string,
-  PrimaryLanguage: string,
-  SecondaryLanguage: string
-}
-
-interface Language {
-  key: string,
-  shortName: string,
-  display: string,
-  staticParams: string[]
-}
-
-interface BookName {
-  language: string,
-  display: string
-}
-
-interface BookNames {
-  [key: string]: BookName[]
-}
-
-type StaticParam = {
-  primary: string;
-  secondary: string;
-  storyName: string;
-};
-
-const LanguageMap: Language[] = [
-  { key: "English-NZ", shortName: "EnglishNZ", display: "English NZ", staticParams: ["English-NZ", "EnglishNZ", "English_NZ"] },
-  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin", "Simplified-Chinese", "SimplifiedChinese", "Simplified_Chinese"] },
-  { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
-  { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US", "SpanishUS", "Spanish_US"] },
-  { key: "Maori", shortName: "Maori", display: "Te Reo Māori", staticParams: ["Maori", "Te Reo Maori", "Te-Reo-Maori", "TeReoMaori", "Te_Reo_Maori"] },
-  { key: "Italian", shortName: "Italian", display: "Italian", staticParams: ["Italian"] },
-];
-
-const BookNamesLocalised: BookNames = {
-  "Art": [
-    { language: "EnglishNZ", display: "Art" },
-    { language: "Maori", display: "Toi" },
-    { language: "Mandarin", display: "艺术" },
-    { language: "French", display: "L’art" },
-    { language: "SpanishUS", display: "Arte" },
-  ],
-
-  "Band": [
-    { language: "EnglishNZ", display: "Band" },
-    { language: "Maori", display: "Pēne" },
-    { language: "Mandarin", display: "乐队" },
-    { language: "French", display: "Le groupe" },
-    { language: "SpanishUS", display: "Banda" },
-  ],
-
-  "BikeRace": [
-    { language: "EnglishNZ", display: "Bike Race" },
-    { language: "Maori", display: "Reihi paihikara" },
-    { language: "Mandarin", display: "自行车比赛" },
-    { language: "French", display: "La course de vélo" },
-    { language: "SpanishUS", display: "Carrera de bicicletas" },
-    { language: "Italian", display: "Gara in bicicletta" },
-  ],
-
-  "Count": [
-    { language: "EnglishNZ", display: "Count" },
-    { language: "Maori", display: "Kaute" },
-    { language: "Mandarin", display: "数数" },
-    { language: "French", display: "Compter" },
-    { language: "SpanishUS", display: "Contar" },
-  ],
-
-  "Dance": [
-    { language: "EnglishNZ", display: "Dance" },
-    { language: "Maori", display: "Kanikani" },
-    { language: "Mandarin", display: "跳舞" },
-    { language: "French", display: "La danse" },
-    { language: "SpanishUS", display: "Bailar" },
-  ],
-
-  "KakapoDisco": [
-    { language: "EnglishNZ", display: "Kākāpō Disco" },
-    { language: "Maori", display: "Kanikani o ngā Kākāpō" },
-    { language: "Mandarin", display: "卡卡波迪斯科在哪里" },
-    { language: "French", display: "La discothèque de Kākāpō" },
-    { language: "SpanishUS", display: "La Disco De Kākāpō" },
-  ],
-
-  "Opposites": [
-    { language: "EnglishNZ", display: "Opposites" },
-    { language: "Maori", display: "Ngā tauaro" },
-    { language: "Mandarin", display: "反义词" },
-    { language: "French", display: "Les contraires" },
-    { language: "SpanishUS", display: "Opuestos" },
-  ],
-
-  "Party": [
-    { language: "EnglishNZ", display: "Party" },
-    { language: "Maori", display: "Pāti" },
-    { language: "Mandarin", display: "宴会" },
-    { language: "French", display: "La fête" },
-    { language: "SpanishUS", display: "Fiesta" },
-    { language: "Italian", display: "Festa" },
-  ],
-
-  "Play": [
-    { language: "EnglishNZ", display: "Play" },
-    { language: "Maori", display: "Tākaro" },
-    { language: "Mandarin", display: "玩" },
-    { language: "French", display: "Jouer" },
-    { language: "SpanishUS", display: "Jugar" },
-  ],
-
-  "TreasureHunt": [
-    { language: "EnglishNZ", display: "Treasure Hunt" },
-    { language: "Maori", display: "Kimi taonga" },
-    { language: "Mandarin", display: "寻宝" },
-    { language: "French", display: "Chasse au trésor" },
-    { language: "SpanishUS", display: "Búsqueda del tesoro" },
-  ]
-};
-
-function getAliasesForKey(key: string): string[] {
-  return LanguageMap.find(lang => lang.key === key)?.staticParams ?? [];
-}
-
-function getLanguageByKey(key: string): Language | undefined {
-  return LanguageMap.find(lang => lang.key === key);
-}
-
-export async function generateStaticParams(): Promise<StaticParam[]> {
-  const params: StaticParam[] = [];
-  for (const storyName in BookNamesLocalised) {
-    const langs = BookNamesLocalised[storyName].map(entry => entry.language);
-    for (const primaryKey of langs) {
-      for (const secondaryKey of langs) {
-        if (primaryKey !== secondaryKey) {
-          const primaryAliases = getAliasesForKey(primaryKey);
-          const secondaryAliases = getAliasesForKey(secondaryKey);
-          if (!primaryAliases.length || !secondaryAliases.length) continue;
-          for (const primary of primaryAliases) {
-            for (const secondary of secondaryAliases) {
-              params.push({
-                primary,
-                secondary,
-                storyName,
-              });
-            }
-          }
-        }
-      }
-    }
-  }
-  return params;
-}
-
-function ResolveLanguageKey(input: string): string | undefined {
-  return LanguageMap.find(lang => lang.staticParams.includes(input))?.key;
-}
-
-export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
-  const { StoryName, PrimaryLanguage, SecondaryLanguage }: AudioPlayerProps = params;
+export default function AudioPlayer({ params }: { params: AudioPlayerRouteParams }) {
+  const { StoryName, PrimaryLanguage, SecondaryLanguage }: AudioPlayerRouteParams = params;
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [playing, setPlaying] = useState(false);
@@ -182,17 +26,20 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
   const [maxProgress, setMaxProgress] = useState(0);
   const [seeking, setSeeking] = useState(false);
 
-  const PrimaryLanguageString = ResolveLanguageKey(PrimaryLanguage) ?? "";
-  const SecondaryLanguageString = ResolveLanguageKey(SecondaryLanguage) ?? "";
-  const PrimaryLanguageStructure = getLanguageByKey(PrimaryLanguageString);
-  const SecondaryLanguageStructure = getLanguageByKey(SecondaryLanguageString);
-  const PrimaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === PrimaryLanguageStructure?.shortName);
-  const SecondaryStoryName: BookName | undefined = BookNamesLocalised[StoryName]?.find(book => book.language === SecondaryLanguageStructure?.shortName);
+  const PrimaryLanguageStructure = getLanguageByKey(PrimaryLanguage);
+  const SecondaryLanguageStructure = getLanguageByKey(SecondaryLanguage);
+  const PrimaryStoryName = getStoryName(StoryName, PrimaryLanguageStructure?.shortName);
+  const SecondaryStoryName = getStoryName(StoryName, SecondaryLanguageStructure?.shortName);
   const CoverURL = "/img/cover/Cover" + StoryName + ".png";
   const AudioURL = `https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguageStructure?.shortName}_${SecondaryLanguageStructure?.shortName}.mp3`;
 
   useEffect(() => {
     let intervalHandle: NodeJS.Timeout;
+    const updateTimeline = () => {
+      if (audioRef.current && playing && !seeking) {
+        setProgress([audioRef.current.currentTime]);
+      }
+    };
 
     if (audioRef.current) {
       setMaxProgress(audioRef.current.duration);
@@ -202,12 +49,6 @@ export default function AudioPlayer({ params }: { params: AudioPlayerProps }) {
     }
     return () => clearInterval(intervalHandle)
   }, [playing, seeking]);
-
-  const updateTimeline = () => {
-    if (audioRef.current && playing && !seeking) {
-      setProgress([audioRef.current.currentTime]);
-    }
-  }
 
   const playToggle = () => {
     if (!playing && audioRef.current) {
