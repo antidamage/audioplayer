@@ -1,0 +1,212 @@
+[
+  {
+    "storyKey": "Art",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Art",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Art",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Art",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Band",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Band",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Band",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Band",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "BikeRace",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "BikeRace",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "BikeRace",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "BikeRace",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "BikeRace",
+    "primaryLanguage": "Italian",
+    "secondaryLanguage": "EnglishNZ"
+  },
+  {
+    "storyKey": "Count",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Count",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Count",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Count",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Dance",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Dance",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Dance",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Dance",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "KakapoDisco",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "KakapoDisco",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "KakapoDisco",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "KakapoDisco",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Opposites",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Opposites",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Opposites",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Opposites",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Party",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Party",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Party",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Party",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Party",
+    "primaryLanguage": "Italian",
+    "secondaryLanguage": "EnglishNZ"
+  },
+  {
+    "storyKey": "Play",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "Play",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "Play",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "Play",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "TreasureHunt",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "French"
+  },
+  {
+    "storyKey": "TreasureHunt",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Mandarin"
+  },
+  {
+    "storyKey": "TreasureHunt",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Maori"
+  },
+  {
+    "storyKey": "TreasureHunt",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "SpanishUS"
+  }
+]

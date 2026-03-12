@@ -1,3 +1,5 @@
+import availableAudioRoutes from "./availableAudioRoutes.json";
+
 export interface AudioPlayerRouteParams {
   StoryName: string;
   PrimaryLanguage: string;
@@ -14,6 +16,12 @@ export interface Language {
 export interface BookName {
   language: string;
   display: string;
+}
+
+export interface AvailableAudioRoute {
+  storyKey: string;
+  primaryLanguage: string;
+  secondaryLanguage: string;
 }
 
 export type BookNames = Record<string, BookName[]>;
@@ -111,6 +119,23 @@ export const BookNamesLocalised: BookNames = {
   ]
 };
 
+export const AvailableAudioRoutes: AvailableAudioRoute[] =
+  availableAudioRoutes as AvailableAudioRoute[];
+
+function getAvailableAudioRouteId(
+  storyKey: string,
+  primaryLanguage: string,
+  secondaryLanguage: string,
+): string {
+  return `${storyKey}::${primaryLanguage}::${secondaryLanguage}`;
+}
+
+const AvailableAudioRouteSet = new Set(
+  AvailableAudioRoutes.map((route) =>
+    getAvailableAudioRouteId(route.storyKey, route.primaryLanguage, route.secondaryLanguage),
+  ),
+);
+
 function normaliseRouteSegment(value: string): string {
   return value
     .normalize("NFKD")
@@ -134,6 +159,15 @@ export function resolveLanguageKey(input: string): string | undefined {
 export function getStoryAliases(storyKey: string): string[] {
   const storyNames = BookNamesLocalised[storyKey] ?? [];
   return Array.from(new Set([storyKey, ...storyNames.map((storyName) => storyName.display)]));
+}
+
+export function getStoryAliasesForLanguage(
+  storyKey: string,
+  languageShortName?: string,
+): string[] {
+  const storyName = getStoryName(storyKey, languageShortName);
+
+  return Array.from(new Set([storyKey, ...(storyName ? [storyName.display] : [])]));
 }
 
 export function resolveStoryKey(input: string): string | undefined {
@@ -162,4 +196,33 @@ export function getStoryName(storyKey: string, languageShortName?: string): Book
   }
 
   return BookNamesLocalised[storyKey]?.find((storyName) => storyName.language === languageShortName);
+}
+
+export function isStoryAliasValidForLanguage(
+  input: string,
+  storyKey: string,
+  languageShortName?: string,
+): boolean {
+  const target = normaliseRouteSegment(input);
+
+  return getStoryAliasesForLanguage(storyKey, languageShortName).some(
+    (storyAlias) => normaliseRouteSegment(storyAlias) === target,
+  );
+}
+
+export function hasAvailableAudioRoute(
+  storyKey: string,
+  primaryLanguageKey: string,
+  secondaryLanguageKey: string,
+): boolean {
+  const primaryLanguage = getLanguageByKey(primaryLanguageKey)?.shortName;
+  const secondaryLanguage = getLanguageByKey(secondaryLanguageKey)?.shortName;
+
+  if (!primaryLanguage || !secondaryLanguage) {
+    return false;
+  }
+
+  return AvailableAudioRouteSet.has(
+    getAvailableAudioRouteId(storyKey, primaryLanguage, secondaryLanguage),
+  );
 }
