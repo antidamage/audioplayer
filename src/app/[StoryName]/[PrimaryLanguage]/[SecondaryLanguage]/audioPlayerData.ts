@@ -31,7 +31,7 @@ export const LanguageMap: Language[] = [
   { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin", "Simplified-Chinese", "SimplifiedChinese", "Simplified_Chinese"] },
   { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
   { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US", "SpanishUS", "Spanish_US"] },
-  { key: "Maori", shortName: "Maori", display: "Te Reo Māori", staticParams: ["Maori", "Te Reo Maori", "Te-Reo-Maori", "TeReoMaori", "Te_Reo_Maori"] },
+  { key: "Maori", shortName: "Maori", display: "Te Reo MÄori", staticParams: ["Maori", "Te Reo Maori", "Te-Reo-Maori", "TeReoMaori", "Te_Reo_Maori"] },
   { key: "Italian", shortName: "Italian", display: "Italian", staticParams: ["Italian"] },
 ];
 
@@ -39,15 +39,15 @@ export const BookNamesLocalised: BookNames = {
   "Art": [
     { language: "EnglishNZ", display: "Art" },
     { language: "Maori", display: "Toi" },
-    { language: "Mandarin", display: "艺术" },
-    { language: "French", display: "L’art" },
+    { language: "Mandarin", display: "è‰ºæœ¯" },
+    { language: "French", display: "Lâ€™art" },
     { language: "SpanishUS", display: "Arte" },
   ],
 
   "Band": [
     { language: "EnglishNZ", display: "Band" },
-    { language: "Maori", display: "Pēne" },
-    { language: "Mandarin", display: "乐队" },
+    { language: "Maori", display: "PÄ“ne" },
+    { language: "Mandarin", display: "ä¹é˜Ÿ" },
     { language: "French", display: "Le groupe" },
     { language: "SpanishUS", display: "Banda" },
   ],
@@ -55,8 +55,8 @@ export const BookNamesLocalised: BookNames = {
   "BikeRace": [
     { language: "EnglishNZ", display: "Bike Race" },
     { language: "Maori", display: "Reihi paihikara" },
-    { language: "Mandarin", display: "自行车比赛" },
-    { language: "French", display: "La course de vélo" },
+    { language: "Mandarin", display: "è‡ªè¡Œè½¦æ¯”èµ›" },
+    { language: "French", display: "La course de vÃ©lo" },
     { language: "SpanishUS", display: "Carrera de bicicletas" },
     { language: "Italian", display: "Gara in bicicletta" },
   ],
@@ -64,7 +64,7 @@ export const BookNamesLocalised: BookNames = {
   "Count": [
     { language: "EnglishNZ", display: "Count" },
     { language: "Maori", display: "Kaute" },
-    { language: "Mandarin", display: "数数" },
+    { language: "Mandarin", display: "æ•°æ•°" },
     { language: "French", display: "Compter" },
     { language: "SpanishUS", display: "Contar" },
   ],
@@ -72,40 +72,40 @@ export const BookNamesLocalised: BookNames = {
   "Dance": [
     { language: "EnglishNZ", display: "Dance" },
     { language: "Maori", display: "Kanikani" },
-    { language: "Mandarin", display: "跳舞" },
+    { language: "Mandarin", display: "è·³èˆž" },
     { language: "French", display: "La danse" },
     { language: "SpanishUS", display: "Bailar" },
   ],
 
   "KakapoDisco": [
-    { language: "EnglishNZ", display: "Kākāpō Disco" },
-    { language: "Maori", display: "Kanikani o ngā Kākāpō" },
-    { language: "Mandarin", display: "卡卡波迪斯科在哪里" },
-    { language: "French", display: "La discothèque de Kākāpō" },
-    { language: "SpanishUS", display: "La Disco De Kākāpō" },
+    { language: "EnglishNZ", display: "KÄkÄpÅ Disco" },
+    { language: "Maori", display: "Kanikani o ngÄ KÄkÄpÅ" },
+    { language: "Mandarin", display: "å¡å¡æ³¢è¿ªæ–¯ç§‘åœ¨å“ªé‡Œ" },
+    { language: "French", display: "La discothÃ¨que de KÄkÄpÅ" },
+    { language: "SpanishUS", display: "La Disco De KÄkÄpÅ" },
   ],
 
   "Opposites": [
     { language: "EnglishNZ", display: "Opposites" },
-    { language: "Maori", display: "Ngā tauaro" },
-    { language: "Mandarin", display: "反义词" },
+    { language: "Maori", display: "NgÄ tauaro" },
+    { language: "Mandarin", display: "åä¹‰è¯" },
     { language: "French", display: "Les contraires" },
     { language: "SpanishUS", display: "Opuestos" },
   ],
 
   "Party": [
     { language: "EnglishNZ", display: "Party" },
-    { language: "Maori", display: "Pāti" },
-    { language: "Mandarin", display: "宴会" },
-    { language: "French", display: "La fête" },
+    { language: "Maori", display: "PÄti" },
+    { language: "Mandarin", display: "å®´ä¼š" },
+    { language: "French", display: "La fÃªte" },
     { language: "SpanishUS", display: "Fiesta" },
     { language: "Italian", display: "Festa" },
   ],
 
   "Play": [
     { language: "EnglishNZ", display: "Play" },
-    { language: "Maori", display: "Tākaro" },
-    { language: "Mandarin", display: "玩" },
+    { language: "Maori", display: "TÄkaro" },
+    { language: "Mandarin", display: "çŽ©" },
     { language: "French", display: "Jouer" },
     { language: "SpanishUS", display: "Jugar" },
   ],
@@ -113,9 +113,9 @@ export const BookNamesLocalised: BookNames = {
   "TreasureHunt": [
     { language: "EnglishNZ", display: "Treasure Hunt" },
     { language: "Maori", display: "Kimi taonga" },
-    { language: "Mandarin", display: "寻宝" },
-    { language: "French", display: "Chasse au trésor" },
-    { language: "SpanishUS", display: "Búsqueda del tesoro" },
+    { language: "Mandarin", display: "å¯»å®" },
+    { language: "French", display: "Chasse au trÃ©sor" },
+    { language: "SpanishUS", display: "BÃºsqueda del tesoro" },
   ]
 };
 
@@ -136,12 +136,15 @@ const AvailableAudioRouteSet = new Set(
   ),
 );
 
-function normaliseRouteSegment(value: string): string {
+function toRouteSegment(value: string): string {
   return value
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[\s'’_-]+/g, "")
-    .toLowerCase();
+    .replace(/[\s'\u2019_-]+/g, "");
+}
+
+function normaliseRouteSegment(value: string): string {
+  return toRouteSegment(value).toLowerCase();
 }
 
 export function getLanguageByKey(key: string): Language | undefined {
@@ -156,40 +159,6 @@ export function resolveLanguageKey(input: string): string | undefined {
   return LanguageMap.find((language) => language.staticParams.includes(input) || language.key === input)?.key;
 }
 
-export function getStoryAliases(storyKey: string): string[] {
-  const storyNames = BookNamesLocalised[storyKey] ?? [];
-  return Array.from(new Set([storyKey, ...storyNames.map((storyName) => storyName.display)]));
-}
-
-export function getStoryAliasesForLanguage(
-  storyKey: string,
-  languageShortName?: string,
-): string[] {
-  const storyName = getStoryName(storyKey, languageShortName);
-
-  return Array.from(new Set([storyKey, ...(storyName ? [storyName.display] : [])]));
-}
-
-export function resolveStoryKey(input: string): string | undefined {
-  if (BookNamesLocalised[input]) {
-    return input;
-  }
-
-  const target = normaliseRouteSegment(input);
-
-  for (const [storyKey, storyNames] of Object.entries(BookNamesLocalised)) {
-    if (normaliseRouteSegment(storyKey) === target) {
-      return storyKey;
-    }
-
-    if (storyNames.some((storyName) => normaliseRouteSegment(storyName.display) === target)) {
-      return storyKey;
-    }
-  }
-
-  return undefined;
-}
-
 export function getStoryName(storyKey: string, languageShortName?: string): BookName | undefined {
   if (!languageShortName) {
     return undefined;
@@ -198,16 +167,30 @@ export function getStoryName(storyKey: string, languageShortName?: string): Book
   return BookNamesLocalised[storyKey]?.find((storyName) => storyName.language === languageShortName);
 }
 
-export function isStoryAliasValidForLanguage(
-  input: string,
+export function getStoryUrlSegment(
   storyKey: string,
   languageShortName?: string,
-): boolean {
+): string {
+  return toRouteSegment(getStoryName(storyKey, languageShortName)?.display ?? storyKey);
+}
+
+export function resolveStoryKeyForLanguageSegment(
+  input: string,
+  languageShortName?: string,
+): string | undefined {
+  if (!languageShortName) {
+    return undefined;
+  }
+
   const target = normaliseRouteSegment(input);
 
-  return getStoryAliasesForLanguage(storyKey, languageShortName).some(
-    (storyAlias) => normaliseRouteSegment(storyAlias) === target,
-  );
+  for (const storyKey of Object.keys(BookNamesLocalised)) {
+    if (normaliseRouteSegment(getStoryUrlSegment(storyKey, languageShortName)) === target) {
+      return storyKey;
+    }
+  }
+
+  return undefined;
 }
 
 export function hasAvailableAudioRoute(

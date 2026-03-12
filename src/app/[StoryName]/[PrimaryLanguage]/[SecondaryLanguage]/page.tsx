@@ -6,30 +6,27 @@ import {
   AvailableAudioRoutes,
   getLanguageByKey,
   getLanguageAliases,
-  getStoryAliasesForLanguage,
+  getStoryUrlSegment,
   hasAvailableAudioRoute,
-  isStoryAliasValidForLanguage,
   resolveLanguageKey,
-  resolveStoryKey,
+  resolveStoryKeyForLanguageSegment,
 } from './audioPlayerData';
 
 export async function generateStaticParams(): Promise<AudioPlayerRouteParams[]> {
   const params: AudioPlayerRouteParams[] = [];
 
   for (const route of AvailableAudioRoutes) {
-    const storyAliases = getStoryAliasesForLanguage(route.storyKey, route.primaryLanguage);
+    const storySegment = getStoryUrlSegment(route.storyKey, route.primaryLanguage);
     const primaryAliases = getLanguageAliases(route.primaryLanguage);
     const secondaryAliases = getLanguageAliases(route.secondaryLanguage);
 
-    for (const storyAlias of storyAliases) {
-      for (const primaryAlias of primaryAliases) {
-        for (const secondaryAlias of secondaryAliases) {
-          params.push({
-            StoryName: storyAlias,
-            PrimaryLanguage: primaryAlias,
-            SecondaryLanguage: secondaryAlias,
-          });
-        }
+    for (const primaryAlias of primaryAliases) {
+      for (const secondaryAlias of secondaryAliases) {
+        params.push({
+          StoryName: storySegment,
+          PrimaryLanguage: primaryAlias,
+          SecondaryLanguage: secondaryAlias,
+        });
       }
     }
   }
@@ -38,18 +35,25 @@ export async function generateStaticParams(): Promise<AudioPlayerRouteParams[]> 
 }
 
 export default function Page({ params }: { params: AudioPlayerRouteParams }) {
-  const storyName = resolveStoryKey(params.StoryName);
   const primaryLanguage = resolveLanguageKey(params.PrimaryLanguage);
   const secondaryLanguage = resolveLanguageKey(params.SecondaryLanguage);
   const primaryLanguageShortName = primaryLanguage
     ? getLanguageByKey(primaryLanguage)?.shortName
+    : undefined;
+  const storyName = resolveStoryKeyForLanguageSegment(
+    params.StoryName,
+    primaryLanguageShortName,
+  );
+  const expectedStorySegment = storyName
+    ? getStoryUrlSegment(storyName, primaryLanguageShortName)
     : undefined;
 
   if (
     !storyName ||
     !primaryLanguage ||
     !secondaryLanguage ||
-    !isStoryAliasValidForLanguage(params.StoryName, storyName, primaryLanguageShortName) ||
+    !primaryLanguageShortName ||
+    params.StoryName !== expectedStorySegment ||
     !hasAvailableAudioRoute(storyName, primaryLanguage, secondaryLanguage)
   ) {
     notFound();

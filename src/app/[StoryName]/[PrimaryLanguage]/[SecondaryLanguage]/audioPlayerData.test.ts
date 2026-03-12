@@ -3,13 +3,11 @@ import { describe, expect, it } from "vitest";
 import {
   getLanguageAliases,
   getLanguageByKey,
-  getStoryAliases,
-  getStoryAliasesForLanguage,
   getStoryName,
+  getStoryUrlSegment,
   hasAvailableAudioRoute,
-  isStoryAliasValidForLanguage,
   resolveLanguageKey,
-  resolveStoryKey,
+  resolveStoryKeyForLanguageSegment,
 } from "./audioPlayerData";
 
 describe("audioPlayerData language helpers", () => {
@@ -37,29 +35,6 @@ describe("audioPlayerData language helpers", () => {
 });
 
 describe("audioPlayerData story helpers", () => {
-  it("returns unique story aliases including localized display names", () => {
-    expect(getStoryAliases("Art").filter((alias) => alias === "Art")).toHaveLength(1);
-    expect(getStoryAliases("TreasureHunt")).toContain("Treasure Hunt");
-  });
-
-  it("limits route story aliases to the canonical key and primary language title", () => {
-    expect(getStoryAliasesForLanguage("Art", "EnglishNZ")).toEqual(["Art"]);
-    expect(getStoryAliasesForLanguage("Art", "Maori")).toEqual(["Art", "Toi"]);
-    expect(getStoryAliasesForLanguage("BikeRace", "Italian")).toEqual([
-      "BikeRace",
-      "Gara in bicicletta",
-    ]);
-  });
-
-  it("resolves story keys from route-friendly and localized aliases", () => {
-    expect(resolveStoryKey("Treasure Hunt")).toBe("TreasureHunt");
-    expect(resolveStoryKey("Treasure-Hunt")).toBe("TreasureHunt");
-    expect(resolveStoryKey("Bike_Race")).toBe("BikeRace");
-    expect(resolveStoryKey("Banda")).toBe("Band");
-    expect(resolveStoryKey("le-groupe")).toBe("Band");
-    expect(resolveStoryKey("Unknown Story")).toBeUndefined();
-  });
-
   it("returns localized story names for valid story-language pairs", () => {
     expect(getStoryName("Dance", "French")).toEqual({
       language: "French",
@@ -69,19 +44,25 @@ describe("audioPlayerData story helpers", () => {
     expect(getStoryName("Dance", "Italian")).toBeUndefined();
   });
 
+  it("creates one URL segment per primary language", () => {
+    expect(getStoryUrlSegment("BikeRace", "EnglishNZ")).toBe("BikeRace");
+    expect(getStoryUrlSegment("BikeRace", "Italian")).toBe("Garainbicicletta");
+    expect(getStoryUrlSegment("Party", "Italian")).toBe("Festa");
+  });
+
+  it("resolves story keys from primary-language URL segments", () => {
+    expect(resolveStoryKeyForLanguageSegment("BikeRace", "EnglishNZ")).toBe("BikeRace");
+    expect(resolveStoryKeyForLanguageSegment("Garainbicicletta", "Italian")).toBe(
+      "BikeRace",
+    );
+    expect(resolveStoryKeyForLanguageSegment("BikeRace", "Italian")).toBeUndefined();
+    expect(resolveStoryKeyForLanguageSegment("UnknownStory", "EnglishNZ")).toBeUndefined();
+  });
+
   it("matches only route combinations backed by an audio file", () => {
     expect(hasAvailableAudioRoute("Art", "English-NZ", "French")).toBe(true);
     expect(hasAvailableAudioRoute("BikeRace", "Italian", "English-NZ")).toBe(true);
     expect(hasAvailableAudioRoute("Art", "French", "English-NZ")).toBe(false);
     expect(hasAvailableAudioRoute("Party", "English-NZ", "Italian")).toBe(false);
-  });
-
-  it("accepts story aliases only when they match the primary language", () => {
-    expect(isStoryAliasValidForLanguage("Art", "Art", "EnglishNZ")).toBe(true);
-    expect(isStoryAliasValidForLanguage("Toi", "Art", "EnglishNZ")).toBe(false);
-    expect(isStoryAliasValidForLanguage("Toi", "Art", "Maori")).toBe(true);
-    expect(isStoryAliasValidForLanguage("Gara-in-bicicletta", "BikeRace", "Italian")).toBe(
-      true,
-    );
   });
 });

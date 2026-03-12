@@ -17,44 +17,34 @@ vi.mock("./AudioPlayer", () => ({
 import Page, { generateStaticParams } from "./page";
 
 describe("generateStaticParams", () => {
-  it("includes known route aliases without generating duplicates", async () => {
+  it("uses one normalized story segment per primary language without duplicates", async () => {
     const params = await generateStaticParams();
     const uniqueParams = new Set(params.map((param) => JSON.stringify(param)));
 
     expect(params).toContainEqual({
-      StoryName: "KakapoDisco",
-      PrimaryLanguage: "English-NZ",
+      StoryName: "BikeRace",
+      PrimaryLanguage: "EnglishNZ",
       SecondaryLanguage: "Maori",
     });
     expect(params).toContainEqual({
-      StoryName: "Gara in bicicletta",
+      StoryName: "Garainbicicletta",
       PrimaryLanguage: "Italian",
       SecondaryLanguage: "EnglishNZ",
     });
     expect(params).not.toContainEqual({
       StoryName: "Bike Race",
+      PrimaryLanguage: "EnglishNZ",
+      SecondaryLanguage: "Maori",
+    });
+    expect(params).not.toContainEqual({
+      StoryName: "Gara in bicicletta",
       PrimaryLanguage: "Italian",
       SecondaryLanguage: "EnglishNZ",
     });
     expect(params).not.toContainEqual({
-      StoryName: "Toi",
+      StoryName: "Reihipaihikara",
       PrimaryLanguage: "English-NZ",
       SecondaryLanguage: "Maori",
-    });
-    expect(params).toContainEqual({
-      StoryName: "Festa",
-      PrimaryLanguage: "Italian",
-      SecondaryLanguage: "English-NZ",
-    });
-    expect(params).not.toContainEqual({
-      StoryName: "Art",
-      PrimaryLanguage: "French",
-      SecondaryLanguage: "English-NZ",
-    });
-    expect(params).not.toContainEqual({
-      StoryName: "Party",
-      PrimaryLanguage: "English-NZ",
-      SecondaryLanguage: "Italian",
     });
     expect(uniqueParams.size).toBe(params.length);
   });
@@ -65,12 +55,12 @@ describe("Page", () => {
     notFound.mockClear();
   });
 
-  it("normalizes route params before rendering the audio player", () => {
+  it("normalizes languages and resolves the story from the primary-language URL segment", () => {
     const page = Page({
       params: {
-        StoryName: "Treasure Hunt",
-        PrimaryLanguage: "EnglishNZ",
-        SecondaryLanguage: "Spanish_US",
+        StoryName: "Garainbicicletta",
+        PrimaryLanguage: "Italian",
+        SecondaryLanguage: "English_NZ",
       },
     });
 
@@ -78,9 +68,9 @@ describe("Page", () => {
     expect(page).toMatchObject({
       props: {
         params: {
-          StoryName: "TreasureHunt",
-          PrimaryLanguage: "English-NZ",
-          SecondaryLanguage: "Spanish-US",
+          StoryName: "BikeRace",
+          PrimaryLanguage: "Italian",
+          SecondaryLanguage: "English-NZ",
         },
       },
       type: "mock-audio-player",
@@ -91,7 +81,7 @@ describe("Page", () => {
     expect(() =>
       Page({
         params: {
-          StoryName: "Unknown Story",
+          StoryName: "UnknownStory",
           PrimaryLanguage: "EnglishNZ",
           SecondaryLanguage: "Spanish_US",
         },
@@ -105,9 +95,9 @@ describe("Page", () => {
     expect(() =>
       Page({
         params: {
-          StoryName: "Art",
-          PrimaryLanguage: "French",
-          SecondaryLanguage: "EnglishNZ",
+          StoryName: "BikeRace",
+          PrimaryLanguage: "EnglishNZ",
+          SecondaryLanguage: "Italian",
         },
       }),
     ).toThrow("NOT_FOUND");
@@ -115,13 +105,13 @@ describe("Page", () => {
     expect(notFound).toHaveBeenCalledTimes(1);
   });
 
-  it("calls notFound for story aliases that do not match the primary language", () => {
+  it("calls notFound for long-form story names with spaces", () => {
     expect(() =>
       Page({
         params: {
-          StoryName: "Toi",
-          PrimaryLanguage: "English-NZ",
-          SecondaryLanguage: "Maori",
+          StoryName: "Gara in bicicletta",
+          PrimaryLanguage: "Italian",
+          SecondaryLanguage: "English-NZ",
         },
       }),
     ).toThrow("NOT_FOUND");
