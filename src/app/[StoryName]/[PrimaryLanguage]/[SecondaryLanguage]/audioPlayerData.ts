@@ -26,12 +26,16 @@ export interface AvailableAudioRoute {
 
 export type BookNames = Record<string, BookName[]>;
 
+// Printed QR-code contract: do not rename, "clean up", localize, or add
+// alternate generated URL language fragments here. These exact fragments are
+// printed in books: English-NZ, Spanish-US, Maori, Mandarin, Italian, French.
+// shortName is only for internal audio filenames.
 export const LanguageMap: Language[] = [
-  { key: "English-NZ", shortName: "EnglishNZ", display: "English NZ", staticParams: ["English-NZ", "EnglishNZ", "English_NZ"] },
-  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin", "Simplified-Chinese", "SimplifiedChinese", "Simplified_Chinese"] },
+  { key: "English-NZ", shortName: "EnglishNZ", display: "English NZ", staticParams: ["English-NZ"] },
+  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin"] },
   { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
-  { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US", "SpanishUS", "Spanish_US"] },
-  { key: "Maori", shortName: "Maori", display: "Te Reo MÄori", staticParams: ["Maori", "Te Reo Maori", "Te-Reo-Maori", "TeReoMaori", "Te_Reo_Maori"] },
+  { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US"] },
+  { key: "Maori", shortName: "Maori", display: "Te Reo MÄori", staticParams: ["Maori"] },
   { key: "Italian", shortName: "Italian", display: "Italian", staticParams: ["Italian"] },
 ];
 
@@ -122,6 +126,18 @@ export const BookNamesLocalised: BookNames = {
 export const AvailableAudioRoutes: AvailableAudioRoute[] =
   availableAudioRoutes as AvailableAudioRoute[];
 
+// Availability contract:
+// - EnglishNZ is the primary language for every story, with all other shipped
+//   languages as secondary languages.
+// - Italian is a primary language only for BikeRace and Party, with EnglishNZ
+//   as the only secondary language.
+// This contract must stay as explicit hard-coded data in availableAudioRoutes;
+// do not replace it with generated matrix logic. No other primary language
+// routes should be added unless the printed QR-code and audio-file contracts
+// are deliberately changed together. The page smoke tests intentionally keep
+// a separate hard-coded printed URL list so accidental route generation changes
+// cannot bless themselves by changing this manifest alone.
+
 function getAvailableAudioRouteId(
   storyKey: string,
   primaryLanguage: string,
@@ -155,6 +171,10 @@ export function getLanguageAliases(shortName: string): string[] {
   return LanguageMap.find((language) => language.shortName === shortName)?.staticParams ?? [];
 }
 
+export function getLanguageRouteParam(shortName: string): string | undefined {
+  return LanguageMap.find((language) => language.shortName === shortName)?.staticParams[0];
+}
+
 export function resolveLanguageKey(input: string): string | undefined {
   return LanguageMap.find((language) => language.staticParams.includes(input) || language.key === input)?.key;
 }
@@ -171,6 +191,13 @@ export function getStoryUrlSegment(
   storyKey: string,
   languageShortName?: string,
 ): string {
+  // Printed QR-code contract: the story URL segment is derived from the
+  // primary language only. Never use the secondary language to localize this
+  // segment. English primary routes must keep the stable story key.
+  if (languageShortName === "EnglishNZ") {
+    return storyKey;
+  }
+
   return toRouteSegment(getStoryName(storyKey, languageShortName)?.display ?? storyKey);
 }
 
@@ -208,4 +235,19 @@ export function hasAvailableAudioRoute(
   return AvailableAudioRouteSet.has(
     getAvailableAudioRouteId(storyKey, primaryLanguage, secondaryLanguage),
   );
+}
+
+export function getAudioUrlForRoute(
+  storyKey: string,
+  primaryLanguageKey: string,
+  secondaryLanguageKey: string,
+): string | undefined {
+  const primaryLanguage = getLanguageByKey(primaryLanguageKey)?.shortName;
+  const secondaryLanguage = getLanguageByKey(secondaryLanguageKey)?.shortName;
+
+  if (!primaryLanguage || !secondaryLanguage) {
+    return undefined;
+  }
+
+  return `https://content.poppyandbuddy.com/audio/${storyKey}_${primaryLanguage}_${secondaryLanguage}.mp3`;
 }

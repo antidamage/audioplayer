@@ -20,6 +20,11 @@
     "secondaryLanguage": "SpanishUS"
   },
   {
+    "storyKey": "Art",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
+  },
+  {
     "storyKey": "Band",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "French"
@@ -40,6 +45,11 @@
     "secondaryLanguage": "SpanishUS"
   },
   {
+    "storyKey": "Band",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
+  },
+  {
     "storyKey": "BikeRace",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "French"
@@ -58,6 +68,11 @@
     "storyKey": "BikeRace",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "BikeRace",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
   },
   {
     "storyKey": "BikeRace",
@@ -85,6 +100,11 @@
     "secondaryLanguage": "SpanishUS"
   },
   {
+    "storyKey": "Count",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
+  },
+  {
     "storyKey": "Dance",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "French"
@@ -103,6 +123,11 @@
     "storyKey": "Dance",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Dance",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
   },
   {
     "storyKey": "KakapoDisco",
@@ -125,6 +150,11 @@
     "secondaryLanguage": "SpanishUS"
   },
   {
+    "storyKey": "KakapoDisco",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
+  },
+  {
     "storyKey": "Opposites",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "French"
@@ -145,6 +175,11 @@
     "secondaryLanguage": "SpanishUS"
   },
   {
+    "storyKey": "Opposites",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
+  },
+  {
     "storyKey": "Party",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "French"
@@ -163,6 +198,11 @@
     "storyKey": "Party",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "Party",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
   },
   {
     "storyKey": "Party",
@@ -190,6 +230,11 @@
     "secondaryLanguage": "SpanishUS"
   },
   {
+    "storyKey": "Play",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
+  },
+  {
     "storyKey": "TreasureHunt",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "French"
@@ -208,5 +253,10 @@
     "storyKey": "TreasureHunt",
     "primaryLanguage": "EnglishNZ",
     "secondaryLanguage": "SpanishUS"
+  },
+  {
+    "storyKey": "TreasureHunt",
+    "primaryLanguage": "EnglishNZ",
+    "secondaryLanguage": "Italian"
   }
 ]

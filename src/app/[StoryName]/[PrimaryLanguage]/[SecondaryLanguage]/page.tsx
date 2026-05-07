@@ -16,6 +16,13 @@ export async function generateStaticParams(): Promise<AudioPlayerRouteParams[]> 
   const params: AudioPlayerRouteParams[] = [];
 
   for (const route of AvailableAudioRoutes) {
+    // Printed QR-code production contract:
+    // - Do not synthesize a language/story matrix here.
+    // - Do not expand "friendly" aliases here.
+    // - Do not localize StoryName from SecondaryLanguage.
+    // Static params are only the hard-coded routes in availableAudioRoutes.json.
+    // The smoke tests compare this output against a hard-coded printed QR URL
+    // list. If a printed URL changes, books already in the world can break.
     const storySegment = getStoryUrlSegment(route.storyKey, route.primaryLanguage);
     const primaryAliases = getLanguageAliases(route.primaryLanguage);
     const secondaryAliases = getLanguageAliases(route.secondaryLanguage);

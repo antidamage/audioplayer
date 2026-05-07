@@ -7,6 +7,7 @@ import { PlayIcon, PauseIcon, ReloadIcon } from "@radix-ui/react-icons"
 import "./../../../AudioPlayer.css";
 import {
   type AudioPlayerRouteParams,
+  getAudioUrlForRoute,
   getLanguageByKey,
   getStoryName,
 } from "./audioPlayerData";
@@ -31,7 +32,7 @@ export default function AudioPlayer({ params }: { params: AudioPlayerRouteParams
   const PrimaryStoryName = getStoryName(StoryName, PrimaryLanguageStructure?.shortName);
   const SecondaryStoryName = getStoryName(StoryName, SecondaryLanguageStructure?.shortName);
   const CoverURL = "/img/cover/Cover" + StoryName + ".png";
-  const AudioURL = `https://content.poppyandbuddy.com/audio/${StoryName}_${PrimaryLanguageStructure?.shortName}_${SecondaryLanguageStructure?.shortName}.mp3`;
+  const AudioURL = getAudioUrlForRoute(StoryName, PrimaryLanguage, SecondaryLanguage);
 
   useEffect(() => {
     let intervalHandle: NodeJS.Timeout;
