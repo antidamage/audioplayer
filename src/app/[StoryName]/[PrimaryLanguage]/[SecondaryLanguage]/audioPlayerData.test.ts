@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   AvailableAudioRoutes,
+  BookNamesLocalised,
   getLanguageAliases,
   getLanguageByKey,
   getLanguageRouteParam,
@@ -115,8 +116,28 @@ describe("audioPlayerData story helpers", () => {
       language: "French",
       display: "La danse",
     });
+    expect(getStoryName("KakapoDisco", "EnglishNZ")).toEqual({
+      language: "EnglishNZ",
+      display: "Kākāpō Disco",
+    });
+    expect(getStoryName("KakapoDisco", "SpanishUS")).toEqual({
+      language: "SpanishUS",
+      display: "La Disco De Kākāpō",
+    });
     expect(getStoryName("Dance")).toBeUndefined();
     expect(getStoryName("Dance", "Italian")).toBeUndefined();
+  });
+
+  it("does not contain mojibake in any language or title display string", () => {
+    const suspiciousPattern = /Ã|Â|Ä|Å|â€|Ë|œ|�/;
+    const displayValues = [
+      ...LanguageMap.map((language) => language.display),
+      ...Object.values(BookNamesLocalised).flat().map((bookName) => bookName.display),
+    ];
+
+    for (const value of displayValues) {
+      expect(value).not.toMatch(suspiciousPattern);
+    }
   });
 
   it("creates one URL segment per primary language", () => {

@@ -2,6 +2,12 @@ import { mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+// PRODUCTION QR-CODE ROUTE CONTRACT
+// This script can rewrite availableAudioRoutes.json, but it must not be used to
+// invent public URL shapes. Printed book QR-code URLs are hard-coded in
+// page.test.tsx; run the tests after this script and do not update the hard-coded
+// URL list unless the already-printed QR-code contract is deliberately changing.
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");

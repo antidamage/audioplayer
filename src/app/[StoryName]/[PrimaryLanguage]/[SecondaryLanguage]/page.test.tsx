@@ -1,3 +1,8 @@
+// PRODUCTION QR-CODE SMOKE CONTRACT
+// The printed QR URL list below is deliberately hard-coded. Do not derive it
+// from the manifest, language map, story names, or generated static params.
+// These tests exist because generated/optimized URL logic has broken production
+// QR codes before.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { notFound } = vi.hoisted(() => ({

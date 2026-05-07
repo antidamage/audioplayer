@@ -1,3 +1,8 @@
+// PRODUCTION QR-CODE ROUTE CONTRACT
+// This route is reached by already-printed book QR codes. Do not optimize,
+// rename, infer, localize from secondary language, or otherwise reshape these
+// URLs. Any change here must preserve the hard-coded URL list in page.test.tsx
+// and the explicit route manifest in availableAudioRoutes.json.
 import { notFound } from 'next/navigation';
 
 import AudioPlayer from './AudioPlayer';

@@ -1,3 +1,9 @@
+// PRODUCTION QR-CODE DATA CONTRACT
+// This file maps printed book QR-code URL fragments to internal audio filenames.
+// Do not generate route combinations from language/story metadata, do not add
+// friendly aliases, and do not localize story URL segments from secondary
+// languages. The supported public URLs are intentionally hard-coded in
+// page.test.tsx and must stay compatible with already-printed books.
 import availableAudioRoutes from "./availableAudioRoutes.json";
 
 export interface AudioPlayerRouteParams {
@@ -35,7 +41,7 @@ export const LanguageMap: Language[] = [
   { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin"] },
   { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
   { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US"] },
-  { key: "Maori", shortName: "Maori", display: "Te Reo MÄori", staticParams: ["Maori"] },
+  { key: "Maori", shortName: "Maori", display: "Te Reo Maori", staticParams: ["Maori"] },
   { key: "Italian", shortName: "Italian", display: "Italian", staticParams: ["Italian"] },
 ];
 
@@ -43,15 +49,15 @@ export const BookNamesLocalised: BookNames = {
   "Art": [
     { language: "EnglishNZ", display: "Art" },
     { language: "Maori", display: "Toi" },
-    { language: "Mandarin", display: "è‰ºæœ¯" },
-    { language: "French", display: "Lâ€™art" },
+    { language: "Mandarin", display: "艺术" },
+    { language: "French", display: "L'art" },
     { language: "SpanishUS", display: "Arte" },
   ],
 
   "Band": [
     { language: "EnglishNZ", display: "Band" },
-    { language: "Maori", display: "PÄ“ne" },
-    { language: "Mandarin", display: "ä¹é˜Ÿ" },
+    { language: "Maori", display: "Pēne" },
+    { language: "Mandarin", display: "乐队" },
     { language: "French", display: "Le groupe" },
     { language: "SpanishUS", display: "Banda" },
   ],
@@ -59,8 +65,8 @@ export const BookNamesLocalised: BookNames = {
   "BikeRace": [
     { language: "EnglishNZ", display: "Bike Race" },
     { language: "Maori", display: "Reihi paihikara" },
-    { language: "Mandarin", display: "è‡ªè¡Œè½¦æ¯”èµ›" },
-    { language: "French", display: "La course de vÃ©lo" },
+    { language: "Mandarin", display: "自行车比赛" },
+    { language: "French", display: "La course de vélo" },
     { language: "SpanishUS", display: "Carrera de bicicletas" },
     { language: "Italian", display: "Gara in bicicletta" },
   ],
@@ -68,7 +74,7 @@ export const BookNamesLocalised: BookNames = {
   "Count": [
     { language: "EnglishNZ", display: "Count" },
     { language: "Maori", display: "Kaute" },
-    { language: "Mandarin", display: "æ•°æ•°" },
+    { language: "Mandarin", display: "数数" },
     { language: "French", display: "Compter" },
     { language: "SpanishUS", display: "Contar" },
   ],
@@ -76,40 +82,40 @@ export const BookNamesLocalised: BookNames = {
   "Dance": [
     { language: "EnglishNZ", display: "Dance" },
     { language: "Maori", display: "Kanikani" },
-    { language: "Mandarin", display: "è·³èˆž" },
+    { language: "Mandarin", display: "跳舞" },
     { language: "French", display: "La danse" },
     { language: "SpanishUS", display: "Bailar" },
   ],
 
   "KakapoDisco": [
-    { language: "EnglishNZ", display: "KÄkÄpÅ Disco" },
-    { language: "Maori", display: "Kanikani o ngÄ KÄkÄpÅ" },
-    { language: "Mandarin", display: "å¡å¡æ³¢è¿ªæ–¯ç§‘åœ¨å“ªé‡Œ" },
-    { language: "French", display: "La discothÃ¨que de KÄkÄpÅ" },
-    { language: "SpanishUS", display: "La Disco De KÄkÄpÅ" },
+    { language: "EnglishNZ", display: "Kākāpō Disco" },
+    { language: "Maori", display: "Kanikani o ngā Kākāpō" },
+    { language: "Mandarin", display: "卡卡波迪斯科在哪里" },
+    { language: "French", display: "La discothèque de Kākāpō" },
+    { language: "SpanishUS", display: "La Disco De Kākāpō" },
   ],
 
   "Opposites": [
     { language: "EnglishNZ", display: "Opposites" },
-    { language: "Maori", display: "NgÄ tauaro" },
-    { language: "Mandarin", display: "åä¹‰è¯" },
+    { language: "Maori", display: "Ngā tauaro" },
+    { language: "Mandarin", display: "反义词" },
     { language: "French", display: "Les contraires" },
     { language: "SpanishUS", display: "Opuestos" },
   ],
 
   "Party": [
     { language: "EnglishNZ", display: "Party" },
-    { language: "Maori", display: "PÄti" },
-    { language: "Mandarin", display: "å®´ä¼š" },
-    { language: "French", display: "La fÃªte" },
+    { language: "Maori", display: "Pāti" },
+    { language: "Mandarin", display: "宴会" },
+    { language: "French", display: "La fête" },
     { language: "SpanishUS", display: "Fiesta" },
     { language: "Italian", display: "Festa" },
   ],
 
   "Play": [
     { language: "EnglishNZ", display: "Play" },
-    { language: "Maori", display: "TÄkaro" },
-    { language: "Mandarin", display: "çŽ©" },
+    { language: "Maori", display: "Tākaro" },
+    { language: "Mandarin", display: "玩" },
     { language: "French", display: "Jouer" },
     { language: "SpanishUS", display: "Jugar" },
   ],
@@ -117,9 +123,9 @@ export const BookNamesLocalised: BookNames = {
   "TreasureHunt": [
     { language: "EnglishNZ", display: "Treasure Hunt" },
     { language: "Maori", display: "Kimi taonga" },
-    { language: "Mandarin", display: "å¯»å®" },
-    { language: "French", display: "Chasse au trÃ©sor" },
-    { language: "SpanishUS", display: "BÃºsqueda del tesoro" },
+    { language: "Mandarin", display: "寻宝" },
+    { language: "French", display: "Chasse au trésor" },
+    { language: "SpanishUS", display: "Búsqueda del tesoro" },
   ]
 };
 
