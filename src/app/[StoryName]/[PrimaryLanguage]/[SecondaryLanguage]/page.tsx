@@ -46,14 +46,15 @@ export async function generateStaticParams(): Promise<AudioPlayerRouteParams[]> 
   return params;
 }
 
-export default function Page({ params }: { params: AudioPlayerRouteParams }) {
-  const primaryLanguage = resolveLanguageKey(params.PrimaryLanguage);
-  const secondaryLanguage = resolveLanguageKey(params.SecondaryLanguage);
+export default async function Page({ params }: { params: Promise<AudioPlayerRouteParams> }) {
+  const resolvedParams = await params;
+  const primaryLanguage = resolveLanguageKey(resolvedParams.PrimaryLanguage);
+  const secondaryLanguage = resolveLanguageKey(resolvedParams.SecondaryLanguage);
   const primaryLanguageShortName = primaryLanguage
     ? getLanguageByKey(primaryLanguage)?.shortName
     : undefined;
   const storyName = resolveStoryKeyForLanguageSegment(
-    params.StoryName,
+    resolvedParams.StoryName,
     primaryLanguageShortName,
   );
   const expectedStorySegment = storyName
@@ -65,7 +66,7 @@ export default function Page({ params }: { params: AudioPlayerRouteParams }) {
     !primaryLanguage ||
     !secondaryLanguage ||
     !primaryLanguageShortName ||
-    params.StoryName !== expectedStorySegment ||
+    resolvedParams.StoryName !== expectedStorySegment ||
     !hasAvailableAudioRoute(storyName, primaryLanguage, secondaryLanguage)
   ) {
     notFound();

@@ -45,6 +45,10 @@ function audioParamsFromPage(page: unknown): AudioPlayerRouteParams {
   return (page as { props: { params: AudioPlayerRouteParams } }).props.params;
 }
 
+function renderPage(params: AudioPlayerRouteParams) {
+  return Page({ params: Promise.resolve(params) });
+}
+
 // Production compatibility contract: this is the hard-coded list of printed
 // QR-code URLs that must continue to resolve. Do not derive this list from
 // LanguageMap, BookNamesLocalised, or availableAudioRoutes.json; it exists to
@@ -308,13 +312,13 @@ describe("generateStaticParams", () => {
     expect(generatedUrls).toEqual(expectedUrls);
   });
 
-  it("handles every hard-coded printed QR URL and maps it to the expected audio file", () => {
+  it("handles every hard-coded printed QR URL and maps it to the expected audio file", async () => {
     for (const printedUrl of EXPECTED_PRINTED_QR_URLS) {
       const params = paramsFromPrintedUrl(printedUrl.path);
 
       notFound.mockClear();
 
-      const page = Page({ params });
+      const page = await renderPage(params);
       const audioParams = audioParamsFromPage(page);
 
       expect(notFound, printedUrl.path).not.toHaveBeenCalled();
@@ -332,13 +336,11 @@ describe("Page", () => {
     notFound.mockClear();
   });
 
-  it("normalizes languages and resolves the story from the primary-language URL segment", () => {
-    const page = Page({
-      params: {
+  it("normalizes languages and resolves the story from the primary-language URL segment", async () => {
+    const page = await renderPage({
         StoryName: "Garainbicicletta",
         PrimaryLanguage: "Italian",
         SecondaryLanguage: "English-NZ",
-      },
     });
 
     expect(notFound).not.toHaveBeenCalled();
@@ -354,13 +356,11 @@ describe("Page", () => {
     });
   });
 
-  it("accepts printed English-primary KakapoDisco QR URLs", () => {
-    const page = Page({
-      params: {
+  it("accepts printed English-primary KakapoDisco QR URLs", async () => {
+    const page = await renderPage({
         StoryName: "KakapoDisco",
         PrimaryLanguage: "English-NZ",
         SecondaryLanguage: "Spanish-US",
-      },
     });
 
     expect(notFound).not.toHaveBeenCalled();
@@ -376,44 +376,38 @@ describe("Page", () => {
     });
   });
 
-  it("calls notFound for invalid route params", () => {
-    expect(() =>
-      Page({
-        params: {
+  it("calls notFound for invalid route params", async () => {
+    await expect(
+      renderPage({
           StoryName: "UnknownStory",
           PrimaryLanguage: "EnglishNZ",
           SecondaryLanguage: "Spanish_US",
-        },
       }),
-    ).toThrow("NOT_FOUND");
+    ).rejects.toThrow("NOT_FOUND");
 
     expect(notFound).toHaveBeenCalledTimes(1);
   });
 
-  it("calls notFound for resolved params without a backing audio file", () => {
-    expect(() =>
-      Page({
-        params: {
+  it("calls notFound for resolved params without a backing audio file", async () => {
+    await expect(
+      renderPage({
           StoryName: "Art",
           PrimaryLanguage: "Italian",
           SecondaryLanguage: "English-NZ",
-        },
       }),
-    ).toThrow("NOT_FOUND");
+    ).rejects.toThrow("NOT_FOUND");
 
     expect(notFound).toHaveBeenCalledTimes(1);
   });
 
-  it("calls notFound for long-form story names with spaces", () => {
-    expect(() =>
-      Page({
-        params: {
+  it("calls notFound for long-form story names with spaces", async () => {
+    await expect(
+      renderPage({
           StoryName: "Gara in bicicletta",
           PrimaryLanguage: "Italian",
           SecondaryLanguage: "English-NZ",
-        },
       }),
-    ).toThrow("NOT_FOUND");
+    ).rejects.toThrow("NOT_FOUND");
 
     expect(notFound).toHaveBeenCalledTimes(1);
   });
