@@ -87,12 +87,14 @@ describe("audioPlayerData language helpers", () => {
 
   it("returns route aliases for a language short name", () => {
     expect(getLanguageAliases("EnglishNZ")).toEqual(["English-NZ"]);
+    expect(getLanguageAliases("Mandarin")).toEqual(["Mandarin", "Simplified-Chinese"]);
     expect(getLanguageAliases("SpanishUS")).toEqual(["Spanish-US"]);
     expect(getLanguageAliases("Unknown")).toEqual([]);
   });
 
   it("resolves supported language aliases to canonical keys", () => {
     expect(resolveLanguageKey("English-NZ")).toBe("English-NZ");
+    expect(resolveLanguageKey("Simplified-Chinese")).toBe("Mandarin");
     expect(resolveLanguageKey("Spanish-US")).toBe("Spanish-US");
     expect(resolveLanguageKey("German")).toBeUndefined();
   });
@@ -106,6 +108,11 @@ describe("audioPlayerData language helpers", () => {
       "Italian",
       "French",
     ]));
+    expect(LanguageMap.find((language) => language.shortName === "Mandarin")?.staticParams).toEqual([
+      "Mandarin",
+      "Simplified-Chinese",
+    ]);
+    expect(getLanguageRouteParam("Mandarin")).toBe("Mandarin");
     expect(getLanguageRouteParam("SpanishUS")).toBe("Spanish-US");
   });
 });

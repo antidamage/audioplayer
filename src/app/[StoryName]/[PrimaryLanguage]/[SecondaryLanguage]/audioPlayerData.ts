@@ -33,12 +33,13 @@ export interface AvailableAudioRoute {
 export type BookNames = Record<string, BookName[]>;
 
 // Printed QR-code contract: do not rename, "clean up", localize, or add
-// alternate generated URL language fragments here. These exact fragments are
-// printed in books: English-NZ, Spanish-US, Maori, Mandarin, Italian, French.
+// alternate generated URL language fragments here unless they have already
+// shipped in printed books. These exact canonical fragments are printed in
+// books: English-NZ, Spanish-US, Maori, Mandarin, Italian, French.
 // shortName is only for internal audio filenames.
 export const LanguageMap: Language[] = [
   { key: "English-NZ", shortName: "EnglishNZ", display: "English NZ", staticParams: ["English-NZ"] },
-  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin"] },
+  { key: "Mandarin", shortName: "Mandarin", display: "Mandarin", staticParams: ["Mandarin", "Simplified-Chinese"] },
   { key: "French", shortName: "French", display: "French", staticParams: ["French"] },
   { key: "Spanish-US", shortName: "SpanishUS", display: "Spanish (Latin America)", staticParams: ["Spanish-US"] },
   { key: "Maori", shortName: "Maori", display: "Te Reo Maori", staticParams: ["Maori"] },

@@ -63,6 +63,10 @@ const EXPECTED_PRINTED_QR_URLS = [
     audioUrl: "https://content.poppyandbuddy.com/audio/Art_EnglishNZ_Mandarin.mp3",
   },
   {
+    path: "/Art/English-NZ/Simplified-Chinese/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Art_EnglishNZ_Mandarin.mp3",
+  },
+  {
     path: "/Art/English-NZ/Maori/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Art_EnglishNZ_Maori.mp3",
   },
@@ -83,6 +87,10 @@ const EXPECTED_PRINTED_QR_URLS = [
     audioUrl: "https://content.poppyandbuddy.com/audio/Band_EnglishNZ_Mandarin.mp3",
   },
   {
+    path: "/Band/English-NZ/Simplified-Chinese/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Band_EnglishNZ_Mandarin.mp3",
+  },
+  {
     path: "/Band/English-NZ/Maori/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Band_EnglishNZ_Maori.mp3",
   },
@@ -100,6 +108,10 @@ const EXPECTED_PRINTED_QR_URLS = [
   },
   {
     path: "/BikeRace/English-NZ/Mandarin/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/BikeRace_EnglishNZ_Mandarin.mp3",
+  },
+  {
+    path: "/BikeRace/English-NZ/Simplified-Chinese/",
     audioUrl: "https://content.poppyandbuddy.com/audio/BikeRace_EnglishNZ_Mandarin.mp3",
   },
   {
@@ -127,6 +139,10 @@ const EXPECTED_PRINTED_QR_URLS = [
     audioUrl: "https://content.poppyandbuddy.com/audio/Count_EnglishNZ_Mandarin.mp3",
   },
   {
+    path: "/Count/English-NZ/Simplified-Chinese/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Count_EnglishNZ_Mandarin.mp3",
+  },
+  {
     path: "/Count/English-NZ/Maori/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Count_EnglishNZ_Maori.mp3",
   },
@@ -144,6 +160,10 @@ const EXPECTED_PRINTED_QR_URLS = [
   },
   {
     path: "/Dance/English-NZ/Mandarin/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Dance_EnglishNZ_Mandarin.mp3",
+  },
+  {
+    path: "/Dance/English-NZ/Simplified-Chinese/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Dance_EnglishNZ_Mandarin.mp3",
   },
   {
@@ -167,6 +187,10 @@ const EXPECTED_PRINTED_QR_URLS = [
     audioUrl: "https://content.poppyandbuddy.com/audio/KakapoDisco_EnglishNZ_Mandarin.mp3",
   },
   {
+    path: "/KakapoDisco/English-NZ/Simplified-Chinese/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/KakapoDisco_EnglishNZ_Mandarin.mp3",
+  },
+  {
     path: "/KakapoDisco/English-NZ/Maori/",
     audioUrl: "https://content.poppyandbuddy.com/audio/KakapoDisco_EnglishNZ_Maori.mp3",
   },
@@ -187,6 +211,10 @@ const EXPECTED_PRINTED_QR_URLS = [
     audioUrl: "https://content.poppyandbuddy.com/audio/Opposites_EnglishNZ_Mandarin.mp3",
   },
   {
+    path: "/Opposites/English-NZ/Simplified-Chinese/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Opposites_EnglishNZ_Mandarin.mp3",
+  },
+  {
     path: "/Opposites/English-NZ/Maori/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Opposites_EnglishNZ_Maori.mp3",
   },
@@ -204,6 +232,10 @@ const EXPECTED_PRINTED_QR_URLS = [
   },
   {
     path: "/Party/English-NZ/Mandarin/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Party_EnglishNZ_Mandarin.mp3",
+  },
+  {
+    path: "/Party/English-NZ/Simplified-Chinese/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Party_EnglishNZ_Mandarin.mp3",
   },
   {
@@ -231,6 +263,10 @@ const EXPECTED_PRINTED_QR_URLS = [
     audioUrl: "https://content.poppyandbuddy.com/audio/Play_EnglishNZ_Mandarin.mp3",
   },
   {
+    path: "/Play/English-NZ/Simplified-Chinese/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/Play_EnglishNZ_Mandarin.mp3",
+  },
+  {
     path: "/Play/English-NZ/Maori/",
     audioUrl: "https://content.poppyandbuddy.com/audio/Play_EnglishNZ_Maori.mp3",
   },
@@ -248,6 +284,10 @@ const EXPECTED_PRINTED_QR_URLS = [
   },
   {
     path: "/TreasureHunt/English-NZ/Mandarin/",
+    audioUrl: "https://content.poppyandbuddy.com/audio/TreasureHunt_EnglishNZ_Mandarin.mp3",
+  },
+  {
+    path: "/TreasureHunt/English-NZ/Simplified-Chinese/",
     audioUrl: "https://content.poppyandbuddy.com/audio/TreasureHunt_EnglishNZ_Mandarin.mp3",
   },
   {
@@ -374,6 +414,32 @@ describe("Page", () => {
       },
       type: "mock-audio-player",
     });
+  });
+
+  it("normalizes Simplified-Chinese URL fragments to Mandarin internally", async () => {
+    const page = await renderPage({
+        StoryName: "Art",
+        PrimaryLanguage: "English-NZ",
+        SecondaryLanguage: "Simplified-Chinese",
+    });
+    const audioParams = audioParamsFromPage(page);
+
+    expect(notFound).not.toHaveBeenCalled();
+    expect(page).toMatchObject({
+      props: {
+        params: {
+          StoryName: "Art",
+          PrimaryLanguage: "English-NZ",
+          SecondaryLanguage: "Mandarin",
+        },
+      },
+      type: "mock-audio-player",
+    });
+    expect(getAudioUrlForRoute(
+      audioParams.StoryName,
+      audioParams.PrimaryLanguage,
+      audioParams.SecondaryLanguage,
+    )).toBe("https://content.poppyandbuddy.com/audio/Art_EnglishNZ_Mandarin.mp3");
   });
 
   it("calls notFound for invalid route params", async () => {
